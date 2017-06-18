@@ -79,212 +79,48 @@ impl<'a> PlayerFunctionality for Player<'a> {
                               }
                           };
                           match input {
-
-                              1 => {
-                                  println!("Increase Health stat by how much?");
+                              1...7 => {
+                                  println!("You have {} points to spend.", &self.points);
+                                  println!("Increase {} stat by how much?", match input {
+                                      1 => "Health",
+                                      2 => "Attack",
+                                      3 => "Stamina",
+                                      4 => "Dexterity",
+                                      5 => "Mana",
+                                      6 => "Vitality",
+                                      7 => "Defense",
+                                      _ => "Unknown",
+                                  });
                                   loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
+                                      let mut point_amount = String::new();
+                                          match io::stdin().read_line(&mut point_amount) {
                                                 Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
+                                                    let point_amount: i8 = match point_amount.trim().parse() {
                                                         Ok(i)  => i,
                                                         Err(_) => {
-                                                            println!("Can't parse {}", &input);
+                                                            println!("Can't parse {}", &point_amount);
                                                             continue;
                                                         }
                                                     };
-                                                    if &input <= &self.points {
-                                                        self.health = &self.health + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-                              2 => {
-                                  println!("Increase Attack stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
+                                                    if &point_amount <= &self.points && &point_amount > &0 {
+                                                        match input {
+                                                            1 => self.health = &self.health + &point_amount,
+                                                            2 => self.attack = &self.attack + &point_amount,
+                                                            3 => self.stamina = &self.stamina + &point_amount,
+                                                            4 => self.dexterity = &self.dexterity + &point_amount,
+                                                            5 => self.mana = &self.mana + &point_amount,
+                                                            6 => self.vitality = &self.vitality + &point_amount,
+                                                            7 => self.defense = &self.defense + &point_amount,
+                                                            _ => continue,
                                                         }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.attack = &self.attack + &input;
-                                                        self.points = &self.points - &input;
+                                                        self.points = &self.points - &point_amount;
                                                         break;
                                                     } else {
-                                                        println!("You can't spend points that you don't have.")
+                                                        println!("You have {} point(s), you can't spend {}. Sorry.", &self.points, &point_amount);
                                                     }
                                                 }
                                           Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-
-                              3 => {
-                                  println!("Increase Stamina stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.stamina = &self.stamina + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-
-                              4 => {
-                                  println!("Increase Dexterity stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.dexterity = &self.dexterity + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-                              5 => {
-                                  println!("Increase Mana stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.mana = &self.mana + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-                              6 => {
-                                  println!("Increase Vitality stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.vitality = &self.vitality + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
-                                            continue;
-                                          }
-                                      }
-                                  }
-                                  break;
-                              }
-
-                              7 => {
-                                  println!("Increase Defense stat by how much?");
-                                  loop {
-                                      let mut input = String::new();
-                                          match io::stdin().read_line(&mut input) {
-                                                Ok(_)   => {
-                                                    let input: i8 = match input.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &input);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &input <= &self.points {
-                                                        self.defense = &self.defense + &input;
-                                                        self.points = &self.points - &input;
-                                                        break;
-                                                    } else {
-                                                        println!("You can't spend points that you don't have.")
-                                                    }
-                                                }
-                                          Err(_) => {
-                                            println!("Can't parse {}", &input);
+                                            println!("Can't parse {}", &point_amount);
                                             continue;
                                           }
                                       }
@@ -292,7 +128,7 @@ impl<'a> PlayerFunctionality for Player<'a> {
                                   break;
                               }
                               _ => {
-                                  println!("{} is not a valid number (1-7)", &input);
+                                  println!("{} is not a valid input (1-7)", &input);
                                   continue;
                               }
                           }
