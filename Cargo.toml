@@ -1,6 +1,6 @@
 [package]
 name = "candlelight-text-rust"
 version = "0.1.0"
-authors = ["vagrant"]
+authors = ["strainger"]
 
 [dependencies]
