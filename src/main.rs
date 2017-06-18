@@ -15,6 +15,7 @@ struct Player<'a> {
     mana: i8,
     vitality: i8,
     defense: i8,
+    experience: i8,
     points: i8,
 }
 
@@ -29,6 +30,7 @@ impl<'a> Default for Player<'a> {
           mana: 100, 
           vitality: 100, 
           defense: 100, 
+          experience: 0,
           points: 8}
     }
 }
@@ -41,15 +43,16 @@ trait PlayerFunctionality {
 
 impl<'a> PlayerFunctionality for Player<'a> {
     fn display_all_stats(&self) {
-        println!("Name:      {}", &self.name);
-        println!("Health:    {}", &self.health);
-        println!("Attack:    {}", &self.attack);
-        println!("Stamina:   {}", &self.stamina);
-        println!("Dexterity: {}", &self.dexterity);
-        println!("Mana:      {}", &self.mana);
-        println!("Vitality:  {}", &self.vitality);
-        println!("Defense    {}", &self.defense);
-        println!("Points:    {}", &self.points);
+        println!("Name:       {}", &self.name);
+        println!("Health:     {}", &self.health);
+        println!("Attack:     {}", &self.attack);
+        println!("Stamina:    {}", &self.stamina);
+        println!("Dexterity:  {}", &self.dexterity);
+        println!("Mana:       {}", &self.mana);
+        println!("Vitality:   {}", &self.vitality);
+        println!("Defense     {}", &self.defense);
+        println!("Experience: {}", &self.experience);
+        println!("Points:     {}", &self.points);
     }
     fn display_core_stats(&self) {
         println!("1. Health:    {}", &self.health);
