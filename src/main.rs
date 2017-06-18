@@ -64,10 +64,11 @@ impl<'a> PlayerFunctionality for Player<'a> {
         if &self.points == &0 {
             println!("You don't have any point's to spend leveling up.");
         } else {
+            loop {
             println!("Level up points to spend: {}", &self.points);
             &self.display_core_stats();
+            println!("Enter 0 to exit.");
             println!("Stat to level up? (1-7)");
-            loop {
             let mut input = String::new();
                 match io::stdin().read_line(&mut input) {
                       Ok(_)   => {
@@ -79,6 +80,7 @@ impl<'a> PlayerFunctionality for Player<'a> {
                               }
                           };
                           match input {
+                              0 => break,
                               1...7 => {
                                   println!("You have {} points to spend.", &self.points);
                                   println!("Increase {} stat by how much?", match input {
@@ -94,49 +96,44 @@ impl<'a> PlayerFunctionality for Player<'a> {
                                   loop {
                                       let mut point_amount = String::new();
                                           match io::stdin().read_line(&mut point_amount) {
-                                                Ok(_)   => {
-                                                    let point_amount: i8 = match point_amount.trim().parse() {
-                                                        Ok(i)  => i,
-                                                        Err(_) => {
-                                                            println!("Can't parse {}", &point_amount);
-                                                            continue;
-                                                        }
-                                                    };
-                                                    if &point_amount <= &self.points && &point_amount > &0 {
-                                                        match input {
-                                                            1 => self.health = &self.health + &point_amount,
-                                                            2 => self.attack = &self.attack + &point_amount,
-                                                            3 => self.stamina = &self.stamina + &point_amount,
-                                                            4 => self.dexterity = &self.dexterity + &point_amount,
-                                                            5 => self.mana = &self.mana + &point_amount,
-                                                            6 => self.vitality = &self.vitality + &point_amount,
-                                                            7 => self.defense = &self.defense + &point_amount,
-                                                            _ => continue,
-                                                        }
-                                                        self.points = &self.points - &point_amount;
-                                                        break;
-                                                    } else {
-                                                        println!("You have {} point(s), you can't spend {}. Sorry.", &self.points, &point_amount);
-                                                    }
-                                                }
+                                              Ok(_)   => {
+                                                  let point_amount: i8 = match point_amount.trim().parse() {
+                                                      Ok(i)  => i,
+                                                      Err(_) => {
+                                                          println!("Can't parse {}", &point_amount);
+                                                          continue;
+                                                      }
+                                                  };
+                                                  if &point_amount <= &self.points && &point_amount > &0 {
+                                                      match input {
+                                                          1 => self.health = &self.health + &point_amount,
+                                                          2 => self.attack = &self.attack + &point_amount,
+                                                          3 => self.stamina = &self.stamina + &point_amount,
+                                                          4 => self.dexterity = &self.dexterity + &point_amount,
+                                                          5 => self.mana = &self.mana + &point_amount,
+                                                          6 => self.vitality = &self.vitality + &point_amount,
+                                                          7 => self.defense = &self.defense + &point_amount,
+                                                          _ => continue,
+                                                      }
+                                                      self.points = &self.points - &point_amount;
+                                                      break;
+                                                  } else {
+                                                      println!("You have {} point(s), you can't spend {}. Sorry.", &self.points, &point_amount);
+                                                  }
+                                              }
                                           Err(_) => {
-                                            println!("Can't parse {}", &point_amount);
-                                            continue;
+                                              println!("Can't parse {}", &point_amount);
                                           }
                                       }
                                   }
-                                  break;
                               }
                               _ => {
                                   println!("{} is not a valid input (1-7)", &input);
-                                  continue;
                               }
                           }
                       }
-
                       Err(_) => {
-                        println!("Can't parse {}", &input);
-                        continue;
+                          println!("Can't parse {}", &input);
                       }
                 };
             }
