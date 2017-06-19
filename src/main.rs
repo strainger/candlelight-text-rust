@@ -1,22 +1,7 @@
 fn main() {
-    let player = Player {name: "Devmane144", health: 100, attack: 5, stamina: 100, dexterity: 100, mana: 100, vitality: 100, defense: 100, points: 8};
-    display_stats(&player);
-    level_up(&player);
-}
-fn level_up(player: &Player) {
-    println!("Level up points to spend: {}", player.points)
-}
-
-fn display_stats(player: &Player) {
-    println!("Name:      {}", &player.name);
-    println!("Health:    {}", &player.health);
-    println!("Attack:    {}", &player.attack);
-    println!("Stamina:   {}", &player.stamina);
-    println!("Dexterity: {}", &player.dexterity);
-    println!("Mana:      {}", &player.mana);
-    println!("Vitality:  {}", &player.vitality);
-    println!("Defense    {}", &player.defense);
-    println!("Points:    {}", &player.points);
+    let player = Player {name: "DragonMaster385", ..Default::default()};
+    player.display_stats();
+    player.level_up();
 }
 
 struct Player<'a> {
@@ -29,4 +14,41 @@ struct Player<'a> {
     vitality: u8,
     defense: u8,
     points: u8,
+}
+
+impl<'a> Default for Player<'a> {
+    fn default () -> Player<'a> {
+      Player {
+          name: "Player",
+          health: 100, 
+          attack: 5,
+          stamina: 100, 
+          dexterity: 100,
+          mana: 100, 
+          vitality: 100, 
+          defense: 100, 
+          points: 8}
+    }
+}
+
+trait PlayerFunctionality {
+    fn display_stats(&self);
+    fn level_up(&self);
+}
+
+impl<'a> PlayerFunctionality for Player<'a> {
+    fn display_stats(&self) {
+        println!("Name:      {}", &self.name);
+        println!("Health:    {}", &self.health);
+        println!("Attack:    {}", &self.attack);
+        println!("Stamina:   {}", &self.stamina);
+        println!("Dexterity: {}", &self.dexterity);
+        println!("Mana:      {}", &self.mana);
+        println!("Vitality:  {}", &self.vitality);
+        println!("Defense    {}", &self.defense);
+        println!("Points:    {}", &self.points);
+    }
+    fn level_up(&self) {
+        println!("Level up points to spend: {}", &self.points)
+    }
 }
