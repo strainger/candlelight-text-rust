@@ -100,7 +100,7 @@ impl<'a> PlayerFunctionality for Player<'a> {
                                                           continue;
                                                       }
                                                   };
-                                                  if &point_amount <= &self.points && &point_amount > &0 {
+                                                  if &point_amount <= &self.points && &point_amount >= &0 {
                                                       match input {
                                                           1 => self.health = &self.health + &point_amount,
                                                           2 => self.attack = &self.attack + &point_amount,
