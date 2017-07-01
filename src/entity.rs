@@ -1,5 +1,5 @@
 use std::io;
-pub struct Player<'a> {
+pub struct Entity<'a> {
     pub name: &'a str,
     pub health: i8,
     pub attack: i8,
@@ -12,9 +12,9 @@ pub struct Player<'a> {
     pub points: i8,
 }
 
-impl<'a> Default for Player<'a> {
-    fn default () -> Player<'a> {
-      Player {
+impl<'a> Default for Entity<'a> {
+    fn default () -> Entity<'a> {
+      Entity {
           name: "Player",
           health: 100, 
           attack: 5,
@@ -28,13 +28,13 @@ impl<'a> Default for Player<'a> {
     }
 }
 
-pub trait PlayerFunctionality {
+pub trait EntityFunctionality {
     fn display_all_stats(&self);
     fn display_core_stats(&self);
     fn level_up(&mut self);
 }
 
-impl<'a> PlayerFunctionality for Player<'a> {
+impl<'a> EntityFunctionality for Entity<'a> {
     fn display_all_stats(&self) {
         println!("Name:       {}", &self.name);
         println!("Health:     {}", &self.health);
